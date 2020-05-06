@@ -1,0 +1,24 @@
+{
+  "name": "employee-tracking-db",
+  "version": "1.0.0",
+  "description": "command line application to use employee database",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lolo-bc/employee-tracking-db.git"
+  },
+  "author": "lauren cameron",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lolo-bc/employee-tracking-db/issues"
+  },
+  "homepage": "https://github.com/lolo-bc/employee-tracking-db#readme",
+  "dependencies": {
+    "inquirer": "^7.1.0",
+    "mysql": "^2.18.1"
+  }
+}
