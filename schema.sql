@@ -3,9 +3,9 @@ CREATE database all_employees;
 
 USE all_employees;
 
-CREATE TABLE department (
+CREATE TABLE departments (
   id INT NOT NULL,
-  employee_name VARCHAR(30), 
+  department_name VARCHAR(30), 
   PRIMARY KEY (id)
 );
 
@@ -27,4 +27,11 @@ CREATE TABLE employee {
 }
 
 
+SELECT department.department_id, roles.department_id 
+FROM  departments
+INNER JOIN roles ON department.department_id=roles.department_id;
+
+SELECT employee.role_id, roles.id
+FROM employee
+INNER JOIN employee ON employee.role_id=roles.id;
 

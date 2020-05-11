@@ -11,10 +11,10 @@ const connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) throw err;
-    start();
+    mainMenu();
   });
-
-  function start() {
+  
+  function mainMenu() {
     inquirer
       .prompt({
         name: "userAction",
@@ -23,30 +23,116 @@ connection.connect(function(err) {
         choices: ["View all departments", "View all employees", "View all roles", "Add a department", "Add a role", "Add an employee", "update an employee" ]
       })
 
-      .then(function(answer) {
-        switch () {
+      .then(function(response) {
+        switch (response.userAction) {
             case "View all departments":
-                // function
+                viewDepartments();
                 break;
             case "View all employees":
-                // function
+                viewEmployees();
                 break;
             case "View all roles":
-                // function
+                viewRoles();
                 break;
             case "Add a department":
-                //function
+                addDept();
                 break;
-            case "Add a role":
-                //function
-                break;
-            case "Add an employee":
-                //function
-                break;
-            case "update an employee":
-                //function
-                break; 
+            // case "Add a role":
+            
+            //     break;
+            // case "Add an employee":
+            
+            //     break;
+            // case "update an employee":
+            //     updateEmployee();
+            //     break; 
         }
       });
-  }
 
+    function viewDepartments() {
+        let query = "SELECT * FROM  departments";
+        connection.query(query, function(err, res) {
+                for (var i = 0; i < res.length; i++) {
+                console.log(res[i].department_name);
+                };
+                mainMenu();
+            });
+        };
+
+    function viewEmployees() {
+        let query = "SELECT * FROM  employee";
+        connection.query(query, function(err, res) {
+                for (var i = 0; i < res.length; i++) {
+                console.log(res[i].first_name + " " + res[i].last_name);
+                };
+                mainMenu();
+            });
+        };
+
+    function viewRoles() {
+        let query = "SELECT * FROM  roles";
+        connection.query(query, function(err, res) {
+                for (var i = 0; i < res.length; i++) {
+                console.log(res[i].title);
+                };
+                mainMenu();
+            });
+        };
+
+    function addDept() {
+        inquirer
+        .prompt([
+        {
+          name: "deptID",
+          type: "input",
+          message: "What is the ID of the new department?",
+        },
+        {
+        name: "deptName",
+        type: "input",
+        message: "What is the name of the new department?",
+        }
+        ])
+  
+        .then(function(response) {
+            connection.query("INSERT INTO departments SET ?", {
+                    id: response.deptID,
+                    department_name: response.deptName,
+            },
+            function(err) {
+                if (err) throw err;
+                console.log("Your department was created successfully!");
+                mainMenu();
+                }
+            );
+            });
+    };
+
+    function updateEmployee() {
+        inquirer
+        .prompt({
+          name: "employeeName",
+          type: "input",
+          message: "Which employee do you want to update?",
+        },
+        {
+        name: "deptName",
+        type: "input",
+        message: "What is the name of the new department?",
+        })
+  
+        .then(function(response) {
+            connection.query("INSERT INTO departments SET ?", {
+                    id: response.deptID,
+                    department_name: response.deptID,
+            },
+            function(err) {
+                if (err) throw err;
+                console.log("Your department was created successfully!");
+                mainMenu();
+                }
+            );
+            });
+    };
+
+}
