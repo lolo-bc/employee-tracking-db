@@ -195,9 +195,17 @@ connection.connect(function(err) {
         inquirer
         .prompt({
           name: "employeeID",
-          type: "input",
-          message: "What is the ID of the employee you would like to update?",
-        },
+          type: "list",
+          choices: 
+            function () {
+                var choiceArray = [];
+                connection.query("SELECT * FROM  employee", function(err, res) {
+                choiceArray.push(res)
+                });
+                return choiceArray;
+            },
+          message: "Which employee you would like to update?",
+         },
         {
         name: "empNewRole",
         type: "input",
