@@ -178,6 +178,7 @@ connection.connect(function(err) {
             connection.query("INSERT INTO employee SET ?", {
                     id: response.employeeID,
                     first_name: response.empFirstName,
+                    last_name: response.empLastName,
                     role_id: response.empRole,
                     manager_id: response.empManager,
             },
