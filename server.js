@@ -175,7 +175,7 @@ connection.connect(function(err) {
         ])
   
         .then(function(response) {
-            connection.query("INSERT INTO roles SET ?", {
+            connection.query("INSERT INTO employee SET ?", {
                     id: response.employeeID,
                     first_name: response.empFirstName,
                     role_id: response.empRole,
@@ -192,38 +192,36 @@ connection.connect(function(err) {
 
 
     function updateEmployee() {
+        let choices = [];
+
+        connection.query("SELECT first_name FROM  employee", function(err, res) {
+           res.forEach(row => {
+               choices.push(row.first_name);
+               return choices;
+           });
+        
         inquirer
-        .prompt({
-          name: "employeeID",
-          type: "list",
-          choices: 
-            function () {
-                var choiceArray = [];
-                connection.query("SELECT * FROM  employee", function(err, res) {
-                choiceArray.push(res)
-                });
-                return choiceArray;
-            },
+        .prompt([{
+          name: "employeeName",
+          type: 'list',
           message: "Which employee you would like to update?",
+          choices: choices
          },
         {
         name: "empNewRole",
         type: "input",
-        message: "What is the new role of the employee?",
-        })
-  
+        message: "What is the new role ID of the employee?",
+        }])
         .then(function(response) {
             connection.query(
-                "UPDATE employee SET role = response.empNewRole, WHERE id=response.;", {
-
+                `UPDATE employee SET role_id = ${response.empNewRole} WHERE first_name = "${response.employeeName}"`, {
             },
             function(err) {
                 if (err) throw err;
-                console.log("Your department was created successfully!");
+                console.log("Employee Updated!");
                 mainMenu();
                 }
-            );
-            });
-    };
-
+        )}
+ )}
+ )}
 }
