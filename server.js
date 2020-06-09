@@ -222,6 +222,6 @@ connection.connect(function(err) {
                 mainMenu();
                 }
         )}
- )}
- )}
+        )}
+     )};
 }
